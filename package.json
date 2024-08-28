@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@ethersproject/networks": "^5.7.1",
+    "@ethersproject/providers": "^5.7.2",
     "@metamask/detect-provider": "^2.0.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",

@@ -56,8 +56,8 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import MusicID from "../services/MusicID.json";
@@ -66,7 +66,7 @@ import { useToast } from "vue-toastification";
 let provider;
 let signer;
 let contract;
-const contractAddress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export default {
   name: "AddInstrument",
@@ -144,8 +144,8 @@ export default {
   },
 };
 </script>
-  
-  <style>
+
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -197,4 +197,3 @@ export default {
   background-color: #38a373;
 }
 </style>
-  
