@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="appAdd">
     <div class="form-container">
       <h2>Add an Instrument</h2>
       <div class="form-group">
@@ -66,7 +66,7 @@ import { useToast } from "vue-toastification";
 let provider;
 let signer;
 let contract;
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const contractAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
 
 export default {
   name: "AddInstrument",
@@ -146,7 +146,7 @@ export default {
 </script>
 
 <style>
-#app {
+#appAdd {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

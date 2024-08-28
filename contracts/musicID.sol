@@ -53,7 +53,7 @@ contract MusicID {
             msg.sender
         );
 
-        return newInstrumentId; // Return the ID of the newly added instrument
+        return newInstrumentId; 
     }
 
     function getInstrumentById(uint256 _id) public view returns (
@@ -77,5 +77,27 @@ contract MusicID {
             instrument.maintenanceRecords,
             instrument.image
         );
+    }
+
+    function getInstrumentsByOwner(address _owner) public view returns (uint256[] memory, string[] memory) {
+        uint256 count = 0;
+        for (uint256 i = 1; i <= instrumentsCount; i++) {
+            if (instruments[i].owner == _owner) {
+                count++;
+            }
+        }
+
+        uint256[] memory ids = new uint256[](count);
+        string[] memory names = new string[](count);
+        uint256 index = 0;
+        for (uint256 i = 1; i <= instrumentsCount; i++) {
+            if (instruments[i].owner == _owner) {
+                ids[index] = i;
+                names[index] = instruments[i].name;
+                index++;
+            }
+        }
+
+        return (ids, names);
     }
 }

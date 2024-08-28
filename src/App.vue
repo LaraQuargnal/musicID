@@ -77,7 +77,7 @@ nav a {
   font-weight: 600;
   color: #ffffff;
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 15px;
   transition: color 0.3s ease;
 }
 

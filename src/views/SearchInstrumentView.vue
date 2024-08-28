@@ -1,7 +1,23 @@
 <template>
-  <div id="app">
+  <div id="appSearch">
     <div class="form-container">
-      <h2>Search for an Instrument</h2>
+      <h2>Your Instruments</h2>
+      <div v-if="ownedInstruments.length > 0">
+        <ul>
+          <li
+            v-for="(instrument, index) in ownedInstruments"
+            :key="index"
+            @click="selectInstrument(instrument.id)"
+          >
+            ID: {{ instrument.id }} - {{ instrument.name }}
+          </li>
+        </ul>
+      </div>
+      <p v-if="ownedInstruments.length === 0">
+        You do not own any instruments.
+      </p>
+
+      <h2>Details of an Instrument</h2>
       <div class="form-group">
         <label for="instrumentId">Instrument ID: </label>
         <input
@@ -9,7 +25,7 @@
           id="instrumentId"
           name="instrumentId"
           v-model="instrumentId"
-          placeholder="Enter desired instrument ID"
+          placeholder="Enter ID number"
         />
       </div>
       <button class="button" @click="searchInstrument()">Search</button>
@@ -62,7 +78,11 @@
               />
             </div>
           </div>
-          <div class="image-column" v-if="instrument.image">
+          <div
+            class="image-column"
+            v-if="instrument.image"
+            style="padding: 7px"
+          >
             <img
               :src="instrument.image"
               alt="Instrument Image"
@@ -82,7 +102,7 @@ import MusicID from "../services/MusicID.json";
 let provider;
 let signer;
 let contract;
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const contractAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
 
 export default {
   name: "SearchInstrumentView",
@@ -91,6 +111,7 @@ export default {
       instrumentId: "",
       instrument: null,
       errorMessage: "",
+      ownedInstruments: [],
     };
   },
   methods: {
@@ -105,12 +126,30 @@ export default {
 
           contract = new ethers.Contract(contractAddress, MusicID.abi, signer);
 
+          await this.loadOwnedInstruments();
+
           console.log("Connected to MetaMask:", await signer.getAddress());
         } else {
           alert("Please install MetaMask to use this application.");
         }
       } catch (error) {
         console.error("Error connecting to MetaMask:", error);
+      }
+    },
+
+    async loadOwnedInstruments() {
+      try {
+        const address = await signer.getAddress();
+        const [ids, names] = await contract.getInstrumentsByOwner(address);
+
+        this.ownedInstruments = ids.map((id, index) => ({
+          id,
+          name: names[index],
+        }));
+
+        console.log("Owned instruments:", this.ownedInstruments);
+      } catch (error) {
+        console.error("Error loading owned instruments:", error);
       }
     },
 
@@ -143,7 +182,13 @@ export default {
         this.errorMessage = "Instrument ID not found!";
       }
     },
+
+    selectInstrument(id) {
+      this.instrumentId = id;
+      this.searchInstrument();
+    },
   },
+
   async mounted() {
     await this.connectWallet();
   },
@@ -151,7 +196,7 @@ export default {
 </script>
 
 <style>
-#app {
+#appSearch {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -168,6 +213,19 @@ export default {
   border-radius: 10px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.searchInstrument {
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  margin: 0 10%;
 }
 
 .form-group {
@@ -225,5 +283,23 @@ export default {
   max-width: 100%;
   max-height: 280px;
   border-radius: 10px;
+}
+
+#error {
+  color: red;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #e0e0e0;
 }
 </style>
