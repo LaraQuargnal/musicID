@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AddInstrumentView from "../views/AddInstrumentView.vue";
+import AboutView from "../views/AboutView.vue";
 
 const routes = [
   {
@@ -13,7 +14,11 @@ const routes = [
     name: "add-instrument",
     component: AddInstrumentView,
   },
-  // Add more routes as needed
+  {
+    path: "/about",
+    name: "about",
+    component: AboutView,
+  },
 ];
 
 const router = createRouter({

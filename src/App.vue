@@ -1,6 +1,8 @@
 <template>
   <nav>
     <router-link to="/">🎺 Home</router-link> |
+    <router-link to="/manage-instruments">Manage your instruments</router-link>
+    | <router-link to="/search-instrument">Search instrument</router-link> |
     <router-link to="/add-instrument">+ Add instrument</router-link> |
     <router-link to="/about">About</router-link>
     |
@@ -32,7 +34,6 @@ export default {
 
           await ethereum.request({ method: "eth_requestAccounts" });
 
-          // Set the connected state to true when connected successfully
           this.connected = true;
 
           console.log("Connected to MetaMask:", await signer.getAddress());

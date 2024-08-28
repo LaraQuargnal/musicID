@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\lquar\\musicID\\musicid\\contracts\\musicID.sol": {
-      "lastModificationDate": 1724853230510,
-      "contentHash": "f28e00ca59a847c233e632920387f517",
+      "lastModificationDate": 1724858933822,
+      "contentHash": "3448eda4870ffdbbbc2b466aae288956",
       "sourceName": "contracts/musicID.sol",
       "solcConfig": {
         "version": "0.8.24",

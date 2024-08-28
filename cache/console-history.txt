@@ -1,0 +1,5 @@
+console.log("Instrument added succesfully");
+await tx.wait();
+await tx.await();
+const tx = await musicID.addInstrument("Guitar", "Fender", 2021, " Qdfg7RT", "QmSDFHash");
+const musicID = await ethers.getContractAt("MusicID", "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9");

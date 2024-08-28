@@ -6,10 +6,10 @@ contract MusicID {
     struct Instrument {
         string name;
         string model;
-        uint256 year;
+        string serialNumber;
         address owner;
-        string maintenanceRecords; // IPFS hash
-        string image; // IPFS hash
+        string maintenanceRecords; 
+        string image; 
     }
 
     mapping(uint256 => Instrument) public instruments;
@@ -19,25 +19,26 @@ contract MusicID {
         uint256 id,
         string name,
         string model,
-        uint256 year,
+        string serialNumber,
         address owner
     );
 
     function addInstrument(
         string memory _name,
         string memory _model,
-        uint256 _year,
+        string memory _serialNumber,
         string memory _maintenanceRecords,
         string memory _image
     ) public {
         require(bytes(_name).length > 0, "Name cannot be empty");
         require(bytes(_model).length > 0, "Model cannot be empty");
+        require(bytes(_serialNumber).length > 0, "Serial number cannot be empty");
 
         instrumentsCount++;
         instruments[instrumentsCount] = Instrument(
             _name,
             _model,
-            _year,
+            _serialNumber,
             msg.sender,
             _maintenanceRecords,
             _image
@@ -47,7 +48,7 @@ contract MusicID {
             instrumentsCount,
             _name,
             _model,
-            _year,
+            _serialNumber,
             msg.sender
         );
     }
