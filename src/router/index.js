@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import AddInstrumentView from "../views/AddInstrumentView.vue";
 import AboutView from "../views/AboutView.vue";
 import SearchInstrumentView from "../views/SearchInstrumentView.vue";
+import InstrumentManagerView from "../views/InstrumentManagerView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/search-instrument",
     name: "search-instrument",
     component: SearchInstrumentView,
+  },
+  {
+    path: "/manage-instruments",
+    name: "manage-instruments",
+    component: InstrumentManagerView,
   },
 ];
 

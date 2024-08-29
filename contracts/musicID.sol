@@ -23,6 +23,12 @@ contract MusicID {
         address owner
     );
 
+    event InstrumentUpdated(
+        uint256 id,
+        string maintenanceRecords,
+        string image
+    );
+
     function addInstrument(
         string memory _name,
         string memory _model,
@@ -77,6 +83,21 @@ contract MusicID {
             instrument.maintenanceRecords,
             instrument.image
         );
+    }
+
+    function updateInstrument(
+        uint256 _id,
+        string memory _maintenanceRecords,
+        string memory _image
+    ) public {
+        require(_id > 0 && _id <= instrumentsCount, "Instrument ID is out of bounds");
+        Instrument storage instrument = instruments[_id];
+        require(msg.sender == instrument.owner, "Only the owner can update this instrument");
+
+        instrument.maintenanceRecords = _maintenanceRecords;
+        instrument.image = _image;
+
+        emit InstrumentUpdated(_id, _maintenanceRecords, _image);
     }
 
     function getInstrumentsByOwner(address _owner) public view returns (uint256[] memory, string[] memory) {
