@@ -62,6 +62,24 @@
             placeholder="Enter new image URL"
           />
         </div>
+
+        <div class="form-group">
+          <label for="isStolen">Status:</label>
+          <p v-if="selectedInstrument.isStolen" style="color: red">
+            This instrument is marked as stolen.
+          </p>
+          <p v-else style="color: green">
+            This instrument is not marked as stolen.
+          </p>
+          <button
+            class="stolen-button"
+            v-if="!selectedInstrument.isStolen"
+            @click="markAsStolen"
+          >
+            Mark as Stolen
+          </button>
+        </div>
+
         <button class="button" @click="updateInstrument">
           Update Instrument
         </button>
@@ -98,7 +116,7 @@ export default {
           await ethereum.request({ method: "eth_requestAccounts" });
 
           this.contract = new ethers.Contract(
-            "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+            "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
             MusicID.abi,
             this.signer
           );
@@ -128,6 +146,16 @@ export default {
       this.selectedInstrument = instrument;
       this.updatedMaintenanceRecords = "";
       this.updatedImage = "";
+
+      this.loadInstrumentDetails(instrument.id);
+    },
+    async loadInstrumentDetails(id) {
+      try {
+        const instrument = await this.contract.getInstrumentById(id);
+        this.selectedInstrument.isStolen = instrument.isStolen;
+      } catch (error) {
+        console.error("Error loading instrument details:", error);
+      }
     },
     async updateInstrument() {
       if (!this.selectedInstrument) return;
@@ -145,6 +173,22 @@ export default {
       } catch (error) {
         console.error("Error updating instrument:", error);
         this.message = "Failed to update instrument. Please try again.";
+      }
+    },
+    async markAsStolen() {
+      if (!this.selectedInstrument) return;
+
+      try {
+        const tx = await this.contract.markInstrumentAsStolen(
+          this.selectedInstrument.id
+        );
+        await tx.wait();
+
+        this.selectedInstrument.isStolen = true;
+        this.message = "Instrument marked as stolen successfully!";
+      } catch (error) {
+        console.error("Error marking instrument as stolen:", error);
+        this.message = "Failed to mark instrument as stolen. Please try again.";
       }
     },
   },
@@ -223,5 +267,29 @@ textarea {
   color: green;
   font-weight: bold;
   margin-top: 20px;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.stolen-button {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #38a373;
 }
 </style>

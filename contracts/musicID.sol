@@ -10,6 +10,7 @@ contract MusicID {
         address owner;
         string maintenanceRecords; 
         string image; 
+        bool isStolen; 
     }
 
     mapping(uint256 => Instrument) public instruments;
@@ -27,6 +28,10 @@ contract MusicID {
         uint256 id,
         string maintenanceRecords,
         string image
+    );
+
+    event InstrumentMarkedAsStolen(
+        uint256 id
     );
 
     function addInstrument(
@@ -48,7 +53,8 @@ contract MusicID {
             _serialNumber,
             msg.sender,
             _maintenanceRecords,
-            _image
+            _image,
+            false 
         );
 
         emit InstrumentAdded(
@@ -69,7 +75,8 @@ contract MusicID {
         string memory serialNumber,
         address owner,
         string memory maintenanceRecords,
-        string memory image
+        string memory image,
+        bool isStolen
     ) {
         require(_id > 0 && _id <= instrumentsCount, "Instrument ID is out of bounds");
 
@@ -81,7 +88,8 @@ contract MusicID {
             instrument.serialNumber,
             instrument.owner,
             instrument.maintenanceRecords,
-            instrument.image
+            instrument.image,
+            instrument.isStolen
         );
     }
 
@@ -98,6 +106,16 @@ contract MusicID {
         instrument.image = _image;
 
         emit InstrumentUpdated(_id, _maintenanceRecords, _image);
+    }
+
+    function markInstrumentAsStolen(uint256 _id) public {
+        require(_id > 0 && _id <= instrumentsCount, "Instrument ID is out of bounds");
+        Instrument storage instrument = instruments[_id];
+        require(msg.sender == instrument.owner, "Only the owner can mark this instrument as stolen");
+
+        instrument.isStolen = true;
+
+        emit InstrumentMarkedAsStolen(_id);
     }
 
     function getInstrumentsByOwner(address _owner) public view returns (uint256[] memory, string[] memory) {

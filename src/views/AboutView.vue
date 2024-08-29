@@ -48,14 +48,13 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {};
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .center-content {
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -89,4 +88,3 @@ li {
   margin-bottom: 10px;
 }
 </style>
-  

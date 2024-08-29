@@ -102,7 +102,7 @@ import MusicID from "../services/MusicID.json";
 let provider;
 let signer;
 let contract;
-const contractAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
+const contractAddress = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e";
 
 export default {
   name: "SearchInstrumentView",
