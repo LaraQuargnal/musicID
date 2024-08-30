@@ -35,6 +35,12 @@ contract MusicID {
         bool isStolen
     );
 
+    event InstrumentOwnershipTransferred(
+        uint256 id,
+        address previousOwner,
+        address newOwner
+    );
+
     function addInstrument(
         string memory _name,
         string memory _model,
@@ -117,6 +123,17 @@ contract MusicID {
         instrument.isStolen = !instrument.isStolen;
 
         emit InstrumentMarkedAsStolen(_id, instrument.isStolen);
+    }
+
+    function transferOwnership(uint256 _id, address _newOwner) public {
+        require(_id > 0 && _id <= instrumentsCount, "Instrument ID is out of bounds");
+        Instrument storage instrument = instruments[_id];
+        require(msg.sender == instrument.owner, "Only the current owner can transfer ownership");
+
+        address previousOwner = instrument.owner;
+        instrument.owner = _newOwner;
+
+        emit InstrumentOwnershipTransferred(_id, previousOwner, _newOwner);
     }
 
     function getInstrumentsByOwner(address _owner) public view returns (uint256[] memory, string[] memory) {

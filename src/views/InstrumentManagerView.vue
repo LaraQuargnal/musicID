@@ -1,7 +1,7 @@
 <template>
-  <div id="appEdit">
+  <div id="appManage">
     <div class="form-container">
-      <h2>Edit Your Instrument Details</h2>
+      <h2>Manage Your Instruments</h2>
 
       <div v-if="ownedInstruments.length > 0">
         <h3>Select an Instrument</h3>
@@ -85,6 +85,15 @@
         </button>
       </div>
 
+      <div v-if="selectedInstrument" class="transfer-form-container">
+        <InstrumentTransferComponent
+          :selectedInstrument="selectedInstrument"
+          :contract="contract"
+          :signer="signer"
+          :onTransferComplete="loadInstruments"
+        />
+      </div>
+
       <p v-if="message" class="message">{{ message }}</p>
     </div>
   </div>
@@ -93,9 +102,13 @@
 <script>
 import { ethers } from "ethers";
 import MusicID from "../services/MusicID.json";
+import InstrumentTransferComponent from "../components/InstrumentTransfer.vue";
 
 export default {
-  name: "InstrumentEditorView",
+  name: "InstrumentManagerView",
+  components: {
+    InstrumentTransferComponent,
+  },
   data() {
     return {
       ownedInstruments: [],
@@ -116,7 +129,7 @@ export default {
           await ethereum.request({ method: "eth_requestAccounts" });
 
           this.contract = new ethers.Contract(
-            "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+            "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
             MusicID.abi,
             this.signer
           );
@@ -184,7 +197,9 @@ export default {
         );
         await tx.wait();
 
-        this.message = `Instrument marked as ${this.selectedInstrument.isStolen ? "not stolen" : "stolen"} successfully!`;
+        this.message = `Instrument marked as ${
+          this.selectedInstrument.isStolen ? "not stolen" : "stolen"
+        } successfully!`;
         this.selectedInstrument.isStolen = !this.selectedInstrument.isStolen;
       } catch (error) {
         console.error("Error marking instrument as stolen:", error);
@@ -198,8 +213,8 @@ export default {
 };
 </script>
 
-<style>
-#appEdit {
+<style scoped>
+#appManage {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -216,6 +231,12 @@ export default {
   border-radius: 10px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transfer-form-container {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
 }
 
 ul {

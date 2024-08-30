@@ -28,3 +28,10 @@ main()
 // 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
 // 0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e
 // 0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1
+
+// npx hardhat compile
+// npx hardhat run scripts/deploy.js --network localhost
+// 0x09635F643e140090A9A8Dcd712eD6285858ceBef
+
+// npx hardhat node
+// npx hardhat console --network localhost
