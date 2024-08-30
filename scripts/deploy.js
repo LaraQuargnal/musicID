@@ -21,7 +21,10 @@ main()
 // 0x5FbDB2315678afecb367f032d93F642f64180aa3
 // 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
 // 0x5FbDB2315678afecb367f032d93F642f64180aa3
-// on Chrome does not update Hardhat ETH balance. Works on Edge...3hrs gone on this.
+// Chrome does not update Hardhat ETH balance. Works on Edge...3hrs gone on this.
+// hint: use same account on metamask and hardhat in terminal
+// change network in metamask to localhost:8545 (Hardhat Network 1337)
 // 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 // 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
 // 0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e
+// 0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1

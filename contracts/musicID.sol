@@ -31,7 +31,8 @@ contract MusicID {
     );
 
     event InstrumentMarkedAsStolen(
-        uint256 id
+        uint256 id,
+        bool isStolen
     );
 
     function addInstrument(
@@ -113,9 +114,9 @@ contract MusicID {
         Instrument storage instrument = instruments[_id];
         require(msg.sender == instrument.owner, "Only the owner can mark this instrument as stolen");
 
-        instrument.isStolen = true;
+        instrument.isStolen = !instrument.isStolen;
 
-        emit InstrumentMarkedAsStolen(_id);
+        emit InstrumentMarkedAsStolen(_id, instrument.isStolen);
     }
 
     function getInstrumentsByOwner(address _owner) public view returns (uint256[] memory, string[] memory) {

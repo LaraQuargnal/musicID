@@ -71,12 +71,12 @@
           <p v-else style="color: green">
             This instrument is not marked as stolen.
           </p>
-          <button
-            class="stolen-button"
-            v-if="!selectedInstrument.isStolen"
-            @click="markAsStolen"
-          >
-            Mark as Stolen
+          <button class="stolen-button" @click="markAsStolen">
+            {{
+              selectedInstrument.isStolen
+                ? "Mark as Not Stolen"
+                : "Mark as Stolen"
+            }}
           </button>
         </div>
 
@@ -116,7 +116,7 @@ export default {
           await ethereum.request({ method: "eth_requestAccounts" });
 
           this.contract = new ethers.Contract(
-            "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+            "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
             MusicID.abi,
             this.signer
           );
@@ -184,8 +184,8 @@ export default {
         );
         await tx.wait();
 
-        this.selectedInstrument.isStolen = true;
-        this.message = "Instrument marked as stolen successfully!";
+        this.message = `Instrument marked as ${this.selectedInstrument.isStolen ? "not stolen" : "stolen"} successfully!`;
+        this.selectedInstrument.isStolen = !this.selectedInstrument.isStolen;
       } catch (error) {
         console.error("Error marking instrument as stolen:", error);
         this.message = "Failed to mark instrument as stolen. Please try again.";
