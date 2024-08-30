@@ -10,7 +10,7 @@
 
     <p>
       By creating a digital identity for each instrument, owners can ensure that
-      the instrument’s details, such as make, model, and ownership history, are
+      the instrument’s details, such as make, model, and ownership status, are
       securely stored and easily accessible. This is particularly important for
       situations such as international travel, where having a documented list of
       instruments can help avoid unnecessary taxes and complications at customs.
@@ -28,16 +28,15 @@
       <ul>
         <li>Create and manage digital identities for musical instruments.</li>
         <li>
-          Securely store instrument details, including make, model, and
-          ownership history.
+          Securely store instrument details, including make, model, serial
+          number, and ownership history.
         </li>
         <li>
           Facilitate secure and transparent ownership transfers using blockchain
           technology.
         </li>
         <li>
-          Upload and link multimedia content related to instruments, such as
-          images and audio recordings.
+          Upload link multimedia content related to instruments, such as images.
         </li>
         <li>
           Maintain a detailed record of instrument maintenance, repairs, and
