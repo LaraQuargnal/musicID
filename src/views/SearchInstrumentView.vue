@@ -98,11 +98,11 @@
 <script>
 import { ethers } from "ethers";
 import MusicID from "../services/MusicID.json";
+import { contractAddress } from "@/config.js";
 
 let provider;
 let signer;
 let contract;
-const contractAddress = "0x09635F643e140090A9A8Dcd712eD6285858ceBef";
 
 export default {
   name: "SearchInstrumentView",

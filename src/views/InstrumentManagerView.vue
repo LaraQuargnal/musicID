@@ -103,6 +103,7 @@
 import { ethers } from "ethers";
 import MusicID from "../services/MusicID.json";
 import InstrumentTransferComponent from "../components/InstrumentTransfer.vue";
+import { contractAddress } from "@/config.js";
 
 export default {
   name: "InstrumentManagerView",
@@ -129,7 +130,7 @@ export default {
           await ethereum.request({ method: "eth_requestAccounts" });
 
           this.contract = new ethers.Contract(
-            "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
+            contractAddress,
             MusicID.abi,
             this.signer
           );
